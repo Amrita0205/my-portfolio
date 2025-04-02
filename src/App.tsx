@@ -1,144 +1,178 @@
-import React from 'react';
-import { Moon, Code, Briefcase, User, ExternalLink } from 'lucide-react';
+import { User, Briefcase, Code, ExternalLink } from 'lucide-react';
+import { useEffect } from 'react';
 
-function App() {
+// Define button styles
+const btnStyles = "px-6 py-3 rounded-lg text-white font-semibold transition-colors";
+
+// Define props interface for the button component
+interface ButtonProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+// Button component with proper naming (uppercase)
+const Btn = ({ children, className }: ButtonProps) => (
+  <button className={`${btnStyles} ${className}`}>
+    {children}
+  </button>
+);
+
+export default function App() {
+  useEffect(() => {
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(this: HTMLAnchorElement, e: Event) {
+        e.preventDefault();
+        const target = this.getAttribute('href');
+        if (target) {
+          const element = document.querySelector(target);
+          if (element) {
+            element.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Hero Section */}
-      <div className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?q=80&w=2000" 
-            alt="Background"
-            className="w-full h-full object-cover opacity-20"
-          />
-        </div>
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+      <section id="home" className="min-h-screen flex items-center justify-center px-4">
+        <div className="text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
             Amrita Kadam
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8">
+          <p className="text-xl md:text-2xl mb-6">
             Full Stack Developer | MERN Specialist
           </p>
-          <div className="flex justify-center gap-4">
-            <a href="#about" className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg transition">
-              About Me
-            </a>
-            <a href="#projects" className="px-6 py-3 bg-pink-600 hover:bg-pink-700 rounded-lg transition">
-              My Work
-            </a>
+          <p className="max-w-2xl mx-auto mb-8 text-gray-300">
+            Building efficient and scalable solutions with passion and precision
+          </p>
+          <div className="space-x-4">
+            <Btn className="bg-purple-600 hover:bg-purple-700">About Me</Btn>
+            <Btn className="bg-pink-600 hover:bg-pink-700">My Work</Btn>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-4 bg-gray-800">
+      {/* About Me Section */}
+      <section id="about" className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
-            <User className="w-8 h-8 text-purple-400" />
-            About Me
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 flex items-center gap-2">
+            <User className="text-purple-400" /> About Me
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <p className="text-gray-300 leading-relaxed">
-                Currently interning at Think Tanker Private Limited as a Full Stack Developer, 
-                working on cutting-edge web applications using the MERN stack. Passionate about 
-                creating efficient and scalable solutions while continuously learning new technologies.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-purple-400">Skills</h3>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="bg-gray-700 p-2 rounded">React.js</div>
-                <div className="bg-gray-700 p-2 rounded">Node.js</div>
-                <div className="bg-gray-700 p-2 rounded">MongoDB</div>
-                <div className="bg-gray-700 p-2 rounded">Express.js</div>
-                <div className="bg-gray-700 p-2 rounded">TypeScript</div>
-                <div className="bg-gray-700 p-2 rounded">Tailwind CSS</div>
+          <p className="text-gray-300 mb-6">
+            Currently interning at TerraBiz Pvt Ltd as a Backend Developer Intern. I am passionate about creating efficient and scalable solutions while continuously learning new technologies. I specialize in backend development and full-stack development using the MERN stack and have a strong foundation in Data Structures and Algorithms.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {['React.js', 'Node.js', 'Express.js', 'MongoDB', 'PostgreSQL', 'TypeScript', 'Tailwind CSS', 'Socket.io'].map(skill => (
+              <div key={skill} className="bg-gray-800 p-3 rounded-lg text-center text-purple-300">
+                {skill}
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Experience Section */}
-      <section className="py-20 px-4">
+      <section id="experience" className="py-20 px-4 bg-gray-800">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
-            <Briefcase className="w-8 h-8 text-pink-400" />
-            Experience
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 flex items-center gap-2">
+            <Briefcase className="text-pink-400" /> Experience
           </h2>
-          <div className="bg-gray-800 p-6 rounded-lg mb-8">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="text-xl font-semibold text-purple-400">Full Stack Developer Intern</h3>
-                <p className="text-gray-400">Think Tanker Private Limited</p>
-              </div>
-              <p className="text-gray-400">March 2025 - Present</p>
-            </div>
-            <ul className="list-disc list-inside text-gray-300 space-y-2">
-              <li>Working on full-stack web development projects using MERN stack</li>
-              <li>Collaborating with team members to deliver high-quality solutions</li>
-              <li>Learning and implementing best practices in web development</li>
-            </ul>
+          <div className="bg-gray-900 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold text-purple-300">
+              Backend Developer Intern
+            </h3>
+            <p className="text-gray-400">TerraBiz Pvt Ltd</p>
+            <p className="text-gray-500">March 2025 - Present</p>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-gray-800">
+      <section id="projects" className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
-            <Code className="w-8 h-8 text-pink-400" />
-            Projects
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 flex items-center gap-2">
+            <Code className="text-purple-400" /> Projects
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gray-900 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2 text-purple-400">Profile Website</h3>
-              <p className="text-gray-300 mb-4">A modern portfolio website showcasing professional experience and projects</p>
-              <a href="https://proffile-m5bl9jgea-amrita0205s-projects.vercel.app/" 
-                 className="inline-flex items-center text-purple-400 hover:text-purple-300">
-                View Project <ExternalLink className="w-4 h-4 ml-1" />
-              </a>
+          <div className="space-y-6">
+            {/* Project 1: Prison Management and Live Tracking System */}
+            <div className="bg-gray-800 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-pink-300">
+                Prison Management and Live Tracking System
+              </h3>
+              <p className="text-gray-300 mt-2">
+                Developed a scalable web and mobile-based tracking system with peers for 200+ personnel and 500+ prisoners, incorporating GPS-enabled location tracking and geofencing, improving operational efficiency by 35%. Implemented Role-Based Access Control (RBAC) for administrators, guards, and officers, enhancing security via authentication protocols. Integrated real-time geofencing and anomaly detection, reducing breach incidents by 25% and enabling instant alerts.
+              </p>
+              <p className="text-purple-400 mt-2">
+                Technologies: React.js, Node.js, PostgreSQL, WebSocket (Socket.io), Docker, Leaflet.js
+              </p>
+              <div className="mt-4 flex gap-4">
+                <a href="https://pms-lts-web.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-purple-300 hover:text-purple-200">
+                  Website <ExternalLink size={16} />
+                </a>
+                <a href="https://drive.google.com/drive/folders/19V5OoM9LNxFhtEn7e0L9dqLLlFK7eSvR" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-purple-300 hover:text-purple-200">
+                  App <ExternalLink size={16} />
+                </a>
+              </div>
             </div>
-            <div className="bg-gray-900 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2 text-purple-400">Project Management System</h3>
-              <p className="text-gray-300 mb-4">A comprehensive project management system with task tracking</p>
-              <a href="https://pms-lts-web.vercel.app/" 
-                 className="inline-flex items-center text-purple-400 hover:text-purple-300">
-                View Project <ExternalLink className="w-4 h-4 ml-1" />
-              </a>
+
+            {/* Project 2: Student Portal */}
+            <div className="bg-gray-800 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-pink-300">
+                Student Portal
+              </h3>
+              <p className="text-gray-300 mt-2">
+                In association with college management, designed and developed a web platform utilized by 80+ students to organize coursework, accessing 100+ course materials, and collaborating through a built-in chat feature, boosting group productivity by 30%. Created an announcement module to facilitate timely updates, reducing communication delays by 40%. Integrated role-based access control (admin and user roles), ensuring secure content management with 100% role accuracy during testing.
+              </p>
+              <p className="text-purple-400 mt-2">
+                Technologies: Node.js, Express.js, ejs, JWT Authentication, MongoDB
+              </p>
+              <div className="mt-4">
+                <a href="https://github.com/Amrita0205/STUDENT-PORTAL/tree/master" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-purple-300 hover:text-purple-200">
+                  GitHub <ExternalLink size={16} />
+                </a>
+              </div>
             </div>
-            <div className="bg-gray-900 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2 text-purple-400">Code Conflux</h3>
-              <p className="text-gray-300 mb-4">A collaborative coding platform for developers</p>
-              <a href="https://code-conflux-szk5-amrita0205s-projects.vercel.app/" 
-                 className="inline-flex items-center text-purple-400 hover:text-purple-300">
-                View Project <ExternalLink className="w-4 h-4 ml-1" />
-              </a>
+
+            {/* Project 3: Code Conflux */}
+            <div className="bg-gray-800 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-pink-300">
+                Code Conflux - IIITR Hackathon
+              </h3>
+              <p className="text-gray-300 mt-2">
+                Organized Code Conflux, IIIT Raichur's first hackathon under CodeSoc, uniting the college community for a day of programming. This initiative provided a platform for students to explore technology and innovation, fostering collaboration and growth. It aimed to strengthen the coding culture and facilitate connections with other Institutes of National Importance (INIs) through inter- and intra-institutional competitions.
+              </p>
+              <p className="text-purple-400 mt-2">
+                Role: Organizer | Technologies: React.js, TypeScript, Tailwind CSS
+              </p>
+              <div className="mt-4">
+                <a href="https://code-conflux-szk5-amrita0205s-projects.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-purple-300 hover:text-purple-200">
+                  Website <ExternalLink size={16} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-8 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="flex justify-center items-center gap-4 mb-4">
-            <a href="https://github.com/Amrita0205" 
-               className="text-gray-400 hover:text-purple-400 transition">
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/amrita-kadam-2a293b287/" 
-               className="text-gray-400 hover:text-purple-400 transition">
-              LinkedIn
-            </a>
-          </div>
-          <p className="text-gray-500">© 2025 Amrita Kadam. All rights reserved.</p>
+      <footer className="py-8 px-4 bg-gray-800 text-center">
+        <div className="flex justify-center gap-6 mb-4">
+          <a href="https://github.com/Amrita0205" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-purple-200">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/amrita-kadam-2a293b287/" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-purple-200">
+            LinkedIn
+          </a>
         </div>
+        <p className="text-gray-400">
+          © {new Date().getFullYear()} Amrita Kadam. All rights reserved.
+        </p>
       </footer>
     </div>
   );
 }
-
-export default App;
